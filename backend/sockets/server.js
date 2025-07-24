@@ -55,3 +55,9 @@ app.get('/qr/:businessId', async (req, res) => {
     const qr = await generateQRCode(url);
     res.send(`<img src="${qr}" />`);
 });
+
+
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+    console.log(`🚀 Server running at http://localhost:${PORT}`);
+});
