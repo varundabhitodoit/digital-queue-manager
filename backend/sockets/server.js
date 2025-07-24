@@ -3,7 +3,8 @@ const app = express();
 const http = require('http');
 const { Server } = require('socket.io');
 const cors = require('cors');
-const generateQRCode = require('../utils/generateQR');
+const generateQRCode = require('../../utils/generateQR');
+
 
 
 app.use(cors());
@@ -57,7 +58,3 @@ app.get('/qr/:businessId', async (req, res) => {
 });
 
 
-const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-    console.log(`🚀 Server running at http://localhost:${PORT}`);
-});
