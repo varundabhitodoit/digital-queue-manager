@@ -1,0 +1,53 @@
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-50 p-10">
+    <div class="max-w-4xl mx-auto bg-white shadow-md rounded p-6">
+        <h2 class="text-2xl font-bold mb-4">🛠️ Admin Panel</h2>
+
+        <div class="flex gap-4 mb-6">
+            <button onclick="callNext()"
+                class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Call Next</button>
+            <button onclick="skip()"
+                class="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded">Skip</button>
+        </div>
+
+        <div id="queueData" class="bg-gray-100 p-4 rounded overflow-y-auto max-h-96 text-sm">
+            <!-- Queue status will render here -->
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        function callNext() {
+            socket.emit('call-next');
+        }
+
+        function skip() {
+            socket.emit('skip-ticket');
+        }
+
+        socket.on('queue-updated', ({ queue, currentTicket }) => {
+            document.getElementById('queueData').innerHTML = `
+        <p class="font-semibold text-lg text-blue-600 mb-4">Now Serving: #${currentTicket}</p>
+        ${queue.map(q => `
+          <div class="mb-2 border-b pb-2">
+            <strong>#${q.number}</strong> — ${q.name} — <span class="italic">${q.status}</span>
+          </div>
+        `).join('')}
+      `;
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Join the Queue</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="flex items-center justify-center h-screen bg-gray-100">
+    <div class="bg-white shadow-md rounded px-8 py-6 max-w-md w-full">
+        <h2 class="text-2xl font-bold text-center mb-6">📲 Join the Queue</h2>
+        <input type="text" id="nameInput" placeholder="Enter your name"
+            class="w-full px-4 py-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <button onclick="joinQueue()"
+            class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-all">Get Ticket</button>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        function joinQueue() {
+            const name = document.getElementById('nameInput').value || "Guest";
+            socket.emit('join-queue', name);
+            socket.on('ticket-assigned', (ticket) => {
+                localStorage.setItem('ticketNo', ticket.number);
+                window.location.href = "/ticket.html";
+            });
+        }
+    </script>
+</body>
+
+</html>

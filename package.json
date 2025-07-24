@@ -1,0 +1,19 @@
+{
+  "name": "digital-queue-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "backend/sockets/server.js",
+  "scripts": {
+    "start": "node backend/sockets/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "qrcode": "^1.5.4",
+    "socket.io": "^4.8.1"
+  }
+}
